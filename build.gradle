@@ -10,8 +10,8 @@ repositories {
 
 dependencies {
     //implementation 'io.quarkus:quarkus-container-image-docker'
-    implementation 'io.quarkus:quarkus-container-image-jib'
-    //implementation 'io.quarkus:quarkus-container-image-s2i'
+    //implementation 'io.quarkus:quarkus-container-image-jib'
+    implementation 'io.quarkus:quarkus-container-image-s2i'
     //implementation 'io.quarkus:quarkus-openshift'
     implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
     implementation 'io.quarkus:quarkus-undertow'
