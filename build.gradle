@@ -9,24 +9,29 @@ repositories {
 }
 
 dependencies {
-    implementation 'io.quarkus:quarkus-openshift'
+    //implementation 'io.quarkus:quarkus-container-image-docker'
+    implementation 'io.quarkus:quarkus-container-image-jib'
+    //implementation 'io.quarkus:quarkus-container-image-s2i'
+    //implementation 'io.quarkus:quarkus-openshift'
     implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
-    //implementation 'io.quarkus:quarkus-resteasy-reactive-jsonb'
-    implementation 'io.quarkus:quarkus-rest-client-jsonb'
     implementation 'io.quarkus:quarkus-undertow'
     implementation 'io.quarkus:quarkus-kafka-client'
     implementation 'io.quarkus:quarkus-smallrye-graphql-client'
     implementation 'io.quarkus:quarkus-resteasy'
     implementation 'io.quarkus:quarkus-kafka-streams'
-    //implementation 'io.quarkus:quarkus-rest-client-reactive-jsonb'
-    implementation 'io.quarkus:quarkus-arc'
-    //implementation 'io.quarkus:quarkus-resteasy-reactive'
+    //implementation 'io.quarkus:quarkus-arc'
+    implementation 'io.quarkus:quarkus-rest-client-jsonb'
 
     implementation 'io.quarkus:quarkus-smallrye-health'
     implementation 'io.quarkus:quarkus-smallrye-metrics'
 
+    implementation 'org.json:json:20180813'
+    //implementation 'com.squareup.okhttp3:okhttp:3.14.6'
+
     testImplementation 'io.quarkus:quarkus-junit5'
     testImplementation 'io.rest-assured:rest-assured'
+
+
 }
 
 group 'com.ibm.ecm.sample'

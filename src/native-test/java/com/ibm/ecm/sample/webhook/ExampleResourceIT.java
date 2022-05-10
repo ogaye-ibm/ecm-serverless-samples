@@ -1,4 +1,4 @@
-package org.ibm.ecm.sample.weekhook;
+package com.ibm.ecm.sample.webhook;
 
 import io.quarkus.test.junit.QuarkusIntegrationTest;
 

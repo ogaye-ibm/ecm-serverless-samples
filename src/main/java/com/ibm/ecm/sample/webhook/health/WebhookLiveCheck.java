@@ -1,6 +1,6 @@
-package org.ibm.ecm.sample.weekhook.health;
+package com.ibm.ecm.sample.webhook.health;
 
-import org.ibm.ecm.sample.weekhook.WebhookEventReceiver;
+import com.ibm.ecm.sample.webhook.WebhookEventReceiver;
 import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
 import org.eclipse.microprofile.health.Liveness;
