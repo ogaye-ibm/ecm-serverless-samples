@@ -10,5 +10,5 @@ spec:
   wildcardPolicy: None
   to:
     kind: Service
-    name: webhook
+    name: webhook-jvm
     weight: 100

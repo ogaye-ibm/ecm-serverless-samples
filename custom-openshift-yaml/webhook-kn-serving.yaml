@@ -18,11 +18,11 @@ spec:
             - containerPort: 8080
           livenessProbe:
             httpGet:
-              path: /receiver
+              path: /receiver/live
           readinessProbe:
             httpGet:
-              path: /receiver
+              path: /receiver/ready
     traffic:
-      - tag: v2
+      - tag: v1
         revisionName: webhook-knative-manual-v1
         percent: 100

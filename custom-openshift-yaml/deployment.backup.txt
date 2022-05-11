@@ -2,24 +2,24 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: webhook
+    app: webhook-jvm
     version: v1
-  name: webhook
+  name: webhook-jvm
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: webhook
+      app: webhook-jvm
       version: v1
   template:
     metadata:
       labels:
-        app: webhook
+        app: webhook-jvm
         version: v1
     spec:
       containers:
-      - name: helloboot
-        image: image-registry.openshift-image-registry.svc:5000/dev-og/webhook:latest
+      - name: webhook-jvm
+        image: image-registry.openshift-image-registry.svc:5000/default/webhook-jvm:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
