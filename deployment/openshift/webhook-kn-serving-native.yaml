@@ -1,0 +1,35 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: webhook
+spec:
+  template:
+    metadata:
+      name: webhook-native
+      annotations:
+        autoscaling.knative.dev/target: "10"
+        autoscaling.knative.dev/minScale: "0"
+        autoscaling.knative.dev/maxScale: "5"
+    spec:
+      containers:
+        #- image: image-registry.openshift-image-registry.svc:5000/default/webhook-jvm:latest
+        - image: quay.io/omar.gaye-ibm/webhook-jvm:0.0.2
+          name: webhook-native-container
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /receiver/live
+          readinessProbe:
+            httpGet:
+              path: /receiver/ready
+          env:
+            - name: BUILD
+              value: 'native'
+  traffic:
+    - tag: jvm
+      revisionName: webhook-jvm
+      percent: 50
+    - tag: native
+      revisionName: webhook-native
+      percent: 50
