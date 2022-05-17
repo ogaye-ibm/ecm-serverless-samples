@@ -14,14 +14,17 @@
 # docker run -i --rm -p 8080:8080 quarkus/webhook
 #
 ###
+FROM  alpine:3.12 as usergroup
+RUN addgroup -S appgroup && adduser -S appuser -u 1001 -G appgroup
+
 FROM registry.access.redhat.com/ubi8/ubi-minimal:8.5
 WORKDIR /work/
-RUN chown 185 /work \
+RUN chown 1001 /work \
     && chmod "g+rwX" /work \
-    && chown 185:root /work
-COPY --chown=185:root build/*-runner /work/application
+    && chown 1001:root /work
+COPY --chown=1001:root build/*-runner /work/application
 
 EXPOSE 8080
-USER 185
+USER 1001
 
 CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]
