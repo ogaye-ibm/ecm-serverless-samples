@@ -8,7 +8,7 @@ spec:
       name: webhook-jvm
       annotations:
         autoscaling.knative.dev/target: "10"
-        autoscaling.knative.dev/minScale: "1"
+        autoscaling.knative.dev/minScale: "0"
         autoscaling.knative.dev/maxScale: "5"
     spec:
       containers:
@@ -26,3 +26,10 @@ spec:
           env:
             - name: BUILD
               value: 'jvm'
+  traffic:
+    - tag: jvm
+      revisionName: webhook-jvm
+      percent: 100
+      #- tag: latest
+      #latestRevision: true
+      #percent: 0
