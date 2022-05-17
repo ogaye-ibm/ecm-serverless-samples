@@ -14,11 +14,15 @@
 # docker run -i --rm -p 8080:8080 quarkus/webhook
 #
 ###
-FROM  alpine:3.12 as usergroup
-RUN addgroup -S appgroup && adduser -S appuser -u 1001 -G appgroup
+#FROM  alpine:3.12 as usergroup
+#RUN addgroup -S appgroup && adduser -S appuser -u 1001 -G appgroup
 
 FROM registry.access.redhat.com/ubi8/ubi-minimal:8.5
 WORKDIR /work/
+
+RUN microdnf install shadow-utils
+RUN adduser -u 1001 appuser
+
 RUN chown 1001 /work \
     && chmod "g+rwX" /work \
     && chown 1001:root /work
