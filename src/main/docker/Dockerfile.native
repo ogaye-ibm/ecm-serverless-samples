@@ -16,12 +16,12 @@
 ###
 FROM registry.access.redhat.com/ubi8/ubi-minimal:8.5
 WORKDIR /work/
-RUN chown 1001 /work \
+RUN chown 185 /work \
     && chmod "g+rwX" /work \
     && chown 1001:root /work
-COPY --chown=1001:root build/*-runner /work/application
+COPY --chown=185:root build/*-runner /work/application
 
 EXPOSE 8080
-USER 1001
+USER 185
 
 CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]
