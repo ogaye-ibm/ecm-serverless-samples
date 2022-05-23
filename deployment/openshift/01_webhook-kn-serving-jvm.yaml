@@ -26,10 +26,18 @@ spec:
           env:
             - name: BUILD
               value: 'jvm'
+          volumeMounts:
+          - name: trusted-ca
+            mountPath: /etc/pki/ca-trust/extracted/pem
+            readOnly: true
+      volumes:
+      - name: trusted-ca
+        configMap:
+          name: user-ca-bundle
+          items:
+          - key: ca-bundle.crt
+            path: tls-ca-bundle.pem
   traffic:
     - tag: jvm
       revisionName: webhook-jvm
       percent: 100
-      #- tag: latest
-      #latestRevision: true
-      #percent: 0
