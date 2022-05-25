@@ -14,7 +14,7 @@ spec:
       containers:
         #- image: image-registry.openshift-image-registry.svc:5000/default/webhook-jvm:latest
         - image: quay.io/omar.gaye-ibm/webhook-jvm:0.0.3
-          name: webhook-jvm-container
+          name: webhook-native-container
           ports:
             - containerPort: 8080
           livenessProbe:
@@ -26,6 +26,19 @@ spec:
           env:
             - name: BUILD
               value: 'jvm'
+            - name: SSL_CERT_DIR
+              value: /etc/pki/ca-trust/extracted/pem
+          volumeMounts:
+            - name: trusted-ca
+              mountPath: /etc/pki/ca-trust/extracted/pem
+              readOnly: true
+      volumes:
+        - name: trusted-ca
+          configMap:
+            name: user-ca-bundle
+            items:
+              - key: ca-bundle.crt
+                path: tls-ca-bundle.pem
   traffic:
     - tag: jvm
       revisionName: webhook-jvm

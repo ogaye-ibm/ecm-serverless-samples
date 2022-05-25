@@ -26,6 +26,8 @@ spec:
           env:
             - name: BUILD
               value: 'native'
+            - name: SSL_CERT_DIR
+              value: /etc/pki/ca-trust/extracted/pem
           volumeMounts:
           - name: trusted-ca
             mountPath: /etc/pki/ca-trust/extracted/pem

@@ -29,7 +29,7 @@ public class WebhookLifeCycle {
     void onStart(@Observes StartupEvent ev) {
 
         //Bypass, not needed for now
-        if (true){ return; }
+        //if (true){ return; }
 
         LOGGER.info("The application Webhook Receiver is starting..." + ProfileManager.getActiveProfile());
         String methodName = "contextInitialized";
