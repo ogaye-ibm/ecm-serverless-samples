@@ -8,7 +8,7 @@ spec:
       name: webhook-native
       annotations:
         autoscaling.knative.dev/target: "10"
-        autoscaling.knative.dev/minScale: "0"
+        autoscaling.knative.dev/minScale: "1"
         autoscaling.knative.dev/maxScale: "5"
     spec:
       containers:

@@ -8,37 +8,29 @@ spec:
       name: webhook-jvm
       annotations:
         autoscaling.knative.dev/target: "10"
-        autoscaling.knative.dev/minScale: "0"
+        autoscaling.knative.dev/minScale: "1"
         autoscaling.knative.dev/maxScale: "5"
     spec:
       containers:
         #- image: image-registry.openshift-image-registry.svc:5000/default/webhook-jvm:latest
         - image: quay.io/omar.gaye-ibm/webhook-jvm:0.0.3
-          name: webhook-native-container
+          name: webhook-jvm-container
           ports:
             - containerPort: 8080
-          livenessProbe:
-            httpGet:
-              path: /receiver/live
-          readinessProbe:
-            httpGet:
-              path: /receiver/ready
           env:
             - name: BUILD
               value: 'jvm'
-            - name: SSL_CERT_DIR
-              value: /etc/pki/ca-trust/extracted/pem
           volumeMounts:
             - name: trusted-ca
-              mountPath: /etc/pki/ca-trust/extracted/pem
+              mountPath: /etc/pki/ca-trust/extracted
               readOnly: true
       volumes:
         - name: trusted-ca
           configMap:
-            name: user-ca-bundle
+            name: trusted-ca
             items:
-              - key: ca-bundle.crt
-                path: tls-ca-bundle.pem
+              - key: service-ca.crt
+                path: pem
   traffic:
     - tag: jvm
       revisionName: webhook-jvm
