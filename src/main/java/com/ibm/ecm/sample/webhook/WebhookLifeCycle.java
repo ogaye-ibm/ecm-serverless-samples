@@ -11,8 +11,8 @@ import org.json.JSONObject;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
-import javax.servlet.ServletContext;
-import javax.ws.rs.core.Context;
+//import javax.servlet.ServletContext;
+//import javax.ws.rs.core.Context;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -23,8 +23,7 @@ public class WebhookLifeCycle {
 
     private static final Logger LOGGER = Logger.getLogger(WebhookLifeCycle.class);
 
-    @Context
-    ServletContext context;
+    //@Context ServletContext context;
 
     void onStart(@Observes StartupEvent ev) {
 
