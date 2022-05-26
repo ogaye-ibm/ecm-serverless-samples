@@ -30,6 +30,7 @@ spec:
             name: trusted-ca
             items:
               - key: service-ca.crt
+                #ca-bundle.crt
                 path: pem
   traffic:
     - tag: jvm

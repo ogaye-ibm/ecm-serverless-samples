@@ -114,7 +114,7 @@ public class WebhookEventReceiver {
             JSONObject jsonGraphQLResponse = GraphQLAPIUtil.callGraphQLAPI(graphQLSchema);
 
             // Handle errors in JSON, if any
-            if (jsonGraphQLResponse.has("errors")) {
+            if (jsonGraphQLResponse != null && jsonGraphQLResponse.has("errors")) {
                 JSONArray jsonResponseErrors = jsonGraphQLResponse.getJSONArray("errors");
 
                 // If there is an error, return response based on the first one
