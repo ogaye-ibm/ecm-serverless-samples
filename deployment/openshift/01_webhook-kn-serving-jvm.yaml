@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         #- image: image-registry.openshift-image-registry.svc:5000/default/webhook-jvm:latest
-        - image: quay.io/omar.gaye-ibm/webhook-jvm:0.0.3
+        - image: quay.io/omar.gaye-ibm/webhook-jvm:latest
           name: webhook-jvm-container
           ports:
             - containerPort: 8080
