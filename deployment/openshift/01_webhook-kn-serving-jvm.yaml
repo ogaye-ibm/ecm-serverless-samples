@@ -22,7 +22,7 @@ spec:
               value: 'jvm'
           volumeMounts:
             - name: trusted-ca
-              mountPath: /etc/pki/ca-trust/extracted
+              mountPath: /etc/pki/ca-trust/extracted/pem
               readOnly: true
       volumes:
         - name: trusted-ca
@@ -31,7 +31,7 @@ spec:
             items:
               - key: service-ca.crt
                 #ca-bundle.crt
-                path: pem
+                path: tls-ca-bundle.pem
   traffic:
     - tag: jvm
       revisionName: webhook-jvm
