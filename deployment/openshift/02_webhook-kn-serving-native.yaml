@@ -35,9 +35,9 @@ spec:
       volumes:
       - name: trusted-ca
         configMap:
-          name: user-ca-bundle
+          name: trusted-ca
           items:
-          - key: ca-bundle.crt
+          - key: service-ca.crt
             path: tls-ca-bundle.pem
   traffic:
     - tag: jvm
