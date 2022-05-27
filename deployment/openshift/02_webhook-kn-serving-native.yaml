@@ -8,7 +8,7 @@ spec:
       name: webhook-native
       annotations:
         autoscaling.knative.dev/target: "10"
-        autoscaling.knative.dev/minScale: "1"
+        autoscaling.knative.dev/minScale: "0"
         autoscaling.knative.dev/maxScale: "5"
     spec:
       containers:
@@ -26,19 +26,6 @@ spec:
           env:
             - name: BUILD
               value: 'native'
-            - name: SSL_CERT_DIR
-              value: /etc/pki/ca-trust/extracted/pem
-          volumeMounts:
-          - name: trusted-ca
-            mountPath: /etc/pki/ca-trust/extracted/pem
-            readOnly: true
-      volumes:
-      - name: trusted-ca
-        configMap:
-          name: trusted-ca
-          items:
-          - key: service-ca.crt
-            path: tls-ca-bundle.pem
   traffic:
     - tag: jvm
       revisionName: webhook-jvm
