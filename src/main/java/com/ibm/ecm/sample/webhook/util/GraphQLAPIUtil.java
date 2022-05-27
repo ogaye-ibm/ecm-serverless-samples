@@ -21,21 +21,16 @@
 
 package com.ibm.ecm.sample.webhook.util;
 
-//import okhttp3.*;
 import org.apache.http.HttpHeaders;
-import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
-import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustAllStrategy;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.SSLContextBuilder;
-import org.apache.http.ssl.SSLContexts;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -67,7 +62,6 @@ public class GraphQLAPIUtil {
 
         JSONObject jsonGraphQLResponse = null;
         org.apache.http.HttpResponse response = null;
-        //okhttp3.Response response = null;
         CloseableHttpClient httpClient = null;
         BufferedReader breader = null;
 
@@ -82,21 +76,19 @@ public class GraphQLAPIUtil {
              * completely remove the setSSLSocketFactory() call from the
              * HttpClientBuilder call.
              */
+            /* legacy code
             SSLConnectionSocketFactory sslConnectionSocketFactory =
                     new SSLConnectionSocketFactory(
                     SSLContexts.createDefault(), new String[] { "TLSv1.2" },
                     null,
                     SSLConnectionSocketFactory.getDefaultHostnameVerifier());
-
             httpClient = HttpClientBuilder.create().setSSLSocketFactory(sslConnectionSocketFactory).build();
-            //httpClient = HttpClientBuilder.create().build();
-
+            */
             httpClient = HttpClients
                     .custom()
                     .setSSLContext(new SSLContextBuilder().loadTrustMaterial(null, TrustAllStrategy.INSTANCE).build())
                     .setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE)
                     .build();
-
 
             /*
              * The sample application uses basic authentication when connecting
@@ -142,18 +134,6 @@ public class GraphQLAPIUtil {
 
             // Handle the response
             try {
-                /*OkHttpClient client = new OkHttpClient().newBuilder().build();
-                MediaType mediaType = MediaType.parse("application/json");
-                RequestBody body = RequestBody.create(mediaType, "{\"query\":\"query domainquery {\\n  domain {\\n    id\\n    name\\n    properties {\\n      id\\n    }\\n  }\\n}\",\"variables\":{}}");
-                Request request = new Request.Builder()
-                        .url("https://cpd-cp4ba.itzroks-550004cpmg-j51i84-4b4a324f027aea19c5cbc0c3275c4656-0000.us-east.containers.appdomain.cloud/content-services-graphql/graphql?query=query domainquery {domain {id name properties { id } } }")
-                        .method("POST", body)
-                        .addHeader("Content-Type", "application/json")
-                        .addHeader("Authorization", "Basic Y3A0YWRtaW46Wm05Y3ZmbFY1ZGRIb0V4bXFtQXI=")
-                        .build();
-                response = client.newCall(request).execute();
-                System.out.println("******* RESPONSE IS: " + response.body().string());*/
-
                 response = httpClient.execute(httpPost);
             }catch (Exception e){
                 e.printStackTrace();
