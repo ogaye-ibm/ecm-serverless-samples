@@ -27,6 +27,31 @@ public class WebhookEventReceiver {
     @Context
     ServletContext context;
 
+
+    @GET
+    @Path("/live")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String live() {
+        return "live";
+    }
+
+    @GET
+    @Path("/ready")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String ready() {
+        return "ready";
+    }
+
+    @PostConstruct
+    public void init() {
+        LOGGER.info("... init");
+    }
+
+    @PreDestroy
+    public void cleanup() {
+        LOGGER.info("... cleaned up");
+    }
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response listener(String eventJson) {
@@ -145,40 +170,7 @@ public class WebhookEventReceiver {
             WebhookReceiverLogger.error("Error contacting CPE", e);
         }
 
-
-
         return Response.ok("All good!").build();
-    }
-
-    @GET
-    @Path("/live")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String live() {
-        return "live";
-    }
-
-    @GET
-    @Path("/ready")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String ready() {
-        return "ready";
-    }
-
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    @Path("/hello")
-    public String hello(String test) {
-        return "Hello RESTEasy";
-    }
-
-    @PostConstruct
-    public void init() {
-        LOGGER.info("... init");
-    }
-
-    @PreDestroy
-    public void cleanup() {
-        LOGGER.info("... cleaned up");
     }
 
 }

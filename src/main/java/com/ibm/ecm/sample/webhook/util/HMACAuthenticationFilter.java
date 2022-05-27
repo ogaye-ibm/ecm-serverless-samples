@@ -102,13 +102,6 @@ public class HMACAuthenticationFilter implements ReaderInterceptor {
         String methodName = "aroundReadFrom";
         WebhookReceiverLogger.info(this.getClass().getName(), methodName);
 
-        //for now
-        /*if (true){
-            return ctx.proceed();
-        }*/
-        //-----
-        System.out.println("Omar1 *****");
-
         // Get HMAC header from Webhook event action call
         String hmacHeaderValue = ctx.getHeaders().getFirst(
                 HMAC_CREDENTIALS_HEADER);
@@ -120,13 +113,13 @@ public class HMACAuthenticationFilter implements ReaderInterceptor {
         boolean authenticated = verifyHMACHeader(hmacHeaderValue,
                 requestPayloadBytes);
         if (!authenticated) {
-            WebhookReceiverLogger.info("AAAAAZZZZZZ************ hmacHeaderValue did not match at all");
+            WebhookReceiverLogger.info("************ hmacHeaderValue did not match at all");
             throw new HMACSecurityException("hmacHeaderValue did not match ");
         }
         ctx.setInputStream(new ByteArrayInputStream(requestPayloadBytes));
 
         WebhookReceiverLogger.info(this.getClass().getName(), methodName);
-        System.out.println("Omar2 *****");
+
         return ctx.proceed();
     }
 
@@ -247,7 +240,6 @@ public class HMACAuthenticationFilter implements ReaderInterceptor {
      *         array
      */
     private static String toBase64(byte[] bytes) {
-        //Omar
         //return DatatypeConverter.printBase64Binary(bytes);
         return new String(Base64.getEncoder().encode(bytes));
     }
