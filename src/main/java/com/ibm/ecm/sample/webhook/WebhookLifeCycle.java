@@ -1,5 +1,6 @@
 package com.ibm.ecm.sample.webhook;
 
+import com.ibm.ecm.sample.webhook.config.CSServerConfig;
 import com.ibm.ecm.sample.webhook.util.*;
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
@@ -11,8 +12,7 @@ import org.json.JSONObject;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
-//import javax.servlet.ServletContext;
-//import javax.ws.rs.core.Context;
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -20,6 +20,12 @@ import java.util.List;
 
 @ApplicationScoped
 public class WebhookLifeCycle {
+
+    @Inject
+    CSServerConfig csServerConfig;
+
+    @Inject
+    GraphQLAPIUtil graphQLAPIUtil;
 
     private static final Logger LOGGER = Logger.getLogger(WebhookLifeCycle.class);
 
@@ -35,7 +41,8 @@ public class WebhookLifeCycle {
         //ServletContext context = ev.getServletContext();
 
         // Ping the GraphQL server
-        String objectStoreId = CSServerInfo.CS_SERVER_OBJECTSTORE;
+        String objectStoreId = csServerConfig.objectStore();
+        //CSServerInfo.CS_SERVER_OBJECTSTORE;
 
         WebhookReceiverLogger.debug(
                 "WebhookReceiverServletContextListener starting up-");
@@ -47,7 +54,7 @@ public class WebhookLifeCycle {
         String graphQLSchema = String.format(
                 GraphQLCallTemplate.PING_CONTENTSERVICE_SERVER, objectStoreId);
         JSONObject jsonGraphQLResponse =
-                GraphQLAPIUtil.callGraphQLAPI(graphQLSchema);
+                graphQLAPIUtil.callGraphQLAPI(graphQLSchema);
 
         // Handle errors in JSON, if any
         if (jsonGraphQLResponse.has("errors")) {
@@ -71,7 +78,7 @@ public class WebhookLifeCycle {
         String eventActionName = Constants.EVENTACTION_NAME;
         String eventActionDesc = Constants.EVENTACTION_DESCRIPTION;
         String webhookSecret = Constants.HMAC_CREDENTIAL_SECRET;
-        String webhookReceiverURL = CSServerInfo.WEBHOOK_RECEIVER_URL;
+        String webhookReceiverURL = csServerConfig.webhookReceiverUrl(); //CSServerInfo.WEBHOOK_RECEIVER_URL;
         String webhookReceiverId = Constants.WEBHOOK_RECEIVER_REGISTRATION_ID;
         String subscriptionName = Constants.CREATE_EVENTSUBSCRIPTION_NAME;
         String subscriptionDesc = Constants.CREATE_EVENTSUBSCRIPTION_DESCRIPTION;
@@ -90,7 +97,7 @@ public class WebhookLifeCycle {
                 objectStoreId, eventActionName, eventActionDesc, webhookSecret,
                 webhookReceiverURL, webhookReceiverId, subscriptionName,
                 subscriptionDesc);
-        jsonGraphQLResponse = GraphQLAPIUtil.callGraphQLAPI(graphQLSchema);
+        jsonGraphQLResponse = graphQLAPIUtil.callGraphQLAPI(graphQLSchema);
 
         String eevExternalEventActionId = null;
         try {
@@ -145,7 +152,7 @@ public class WebhookLifeCycle {
             graphQLSchema = String.format(
                     GraphQLCallTemplate.FETCH_EVENTACTION_WITH_CLASSSUBSCRIPTION,
                     objectStoreId, eevExternalEventActionId);
-            jsonGraphQLResponse = GraphQLAPIUtil.callGraphQLAPI(graphQLSchema);
+            jsonGraphQLResponse = graphQLAPIUtil.callGraphQLAPI(graphQLSchema);
 
             List<String> subscriptionIdList =
                     Collections.synchronizedList(new ArrayList<String>());

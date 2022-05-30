@@ -1,5 +1,6 @@
 package com.ibm.ecm.sample.webhook;
 
+import com.ibm.ecm.sample.webhook.config.CSServerConfig;
 import com.ibm.ecm.sample.webhook.util.Constants;
 import com.ibm.ecm.sample.webhook.util.GraphQLAPIUtil;
 import com.ibm.ecm.sample.webhook.util.GraphQLCallTemplate;
@@ -28,11 +29,17 @@ public class WebhookEventReceiver {
     @Context
     ServletContext context;
 
+    @Inject
+    CSServerConfig csServerConfig;
+    @Inject
+    GraphQLAPIUtil graphQLAPIUtil;
 
     @GET
     @Path("/live")
     @Produces(MediaType.TEXT_PLAIN)
     public String live() {
+
+        System.out.println("Config: " + " " + csServerConfig.webhookReceiverUrl());
         return "live";
     }
 
@@ -137,7 +144,7 @@ public class WebhookEventReceiver {
                     + "callGraphQLAPI ping with objectStoreId=" + objectStoreId);
             String graphQLSchema = String.format(GraphQLCallTemplate.PING_CONTENTSERVICE_SERVER,
                     objectStoreId);
-            JSONObject jsonGraphQLResponse = GraphQLAPIUtil.callGraphQLAPI(graphQLSchema);
+            JSONObject jsonGraphQLResponse = graphQLAPIUtil.callGraphQLAPI(graphQLSchema);
 
             // Handle errors in JSON, if any
             if (jsonGraphQLResponse != null && jsonGraphQLResponse.has("errors")) {
@@ -190,7 +197,7 @@ public class WebhookEventReceiver {
                 String graphQLSchema = String.format(
                         GraphQLCallTemplate.FETCH_EVENTACTION_WITH_CLASSSUBSCRIPTION,
                         objectStoreId, eevExternalEventActionId);
-                JSONObject jsonGraphQLResponse = GraphQLAPIUtil.callGraphQLAPI(graphQLSchema);
+                JSONObject jsonGraphQLResponse = graphQLAPIUtil.callGraphQLAPI(graphQLSchema);
 
                 // Check if we should update the associated subscription
                 boolean updateSubscription = false;
@@ -281,7 +288,7 @@ public class WebhookEventReceiver {
                             GraphQLCallTemplate.UPDATE_EVENTACTION_WITH_CLASSSUBSCRIPTION,
                             objectStoreId, eevExternalEventActionId, eventActionName,
                             newSubscriptionName, newSubscriptionDesc, subscriptionId);
-                    jsonGraphQLResponse = GraphQLAPIUtil.callGraphQLAPI(graphQLSchema);
+                    jsonGraphQLResponse = graphQLAPIUtil.callGraphQLAPI(graphQLSchema);
 
                     // Handle errors in JSON, if any
                     if (jsonGraphQLResponse.has("errors")) {
@@ -346,7 +353,7 @@ public class WebhookEventReceiver {
                         " sourceObjectId=" + sourceObjectId);
                 String graphQLSchema = String.format(GraphQLCallTemplate.GET_DOCUMENT, objectStoreId,
                         sourceObjectId);
-                JSONObject jsonGraphQLResponse = GraphQLAPIUtil.callGraphQLAPI(graphQLSchema);
+                JSONObject jsonGraphQLResponse = graphQLAPIUtil.callGraphQLAPI(graphQLSchema);
 
                 // Handle errors in JSON, if any
                 if (jsonGraphQLResponse.has("errors")) {
@@ -470,7 +477,7 @@ public class WebhookEventReceiver {
                                 " and properties=" + propsArray.toString());
                         graphQLSchema = String.format(GraphQLCallTemplate.UPDATE_DOCUMENT,
                                 objectStoreId, sourceObjectId, propsArray.toString());
-                        jsonGraphQLResponse = GraphQLAPIUtil.callGraphQLAPI(graphQLSchema);
+                        jsonGraphQLResponse = graphQLAPIUtil.callGraphQLAPI(graphQLSchema);
 
                         // Handle errors in JSON, if any
                         if (jsonGraphQLResponse.has("errors")) {

@@ -20,6 +20,9 @@ spec:
           env:
             - name: BUILD
               value: 'jvm'
+          envFrom:
+            - configMapRef:
+                name: cs-server-config
   traffic:
     - tag: jvm
       revisionName: webhook-jvm

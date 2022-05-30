@@ -21,6 +21,7 @@
 
 package com.ibm.ecm.sample.webhook.util;
 
+import com.ibm.ecm.sample.webhook.config.CSServerConfig;
 import org.apache.http.HttpHeaders;
 import org.apache.http.StatusLine;
 import org.apache.http.client.methods.HttpPost;
@@ -33,6 +34,8 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.json.JSONObject;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -46,7 +49,11 @@ import java.util.Base64;
  * different protocol is required, the protocol can be changed in the code for
  * this class.
  */
+@ApplicationScoped
 public class GraphQLAPIUtil {
+
+    @Inject
+    CSServerConfig csServerConfig;
 
     /**
      * Handles calls to the Content Services GraphQL API.
@@ -56,9 +63,13 @@ public class GraphQLAPIUtil {
      *            Content Services GraphQL API
      * @return Response for the call to the Content Services GraphQL API
      */
-    public static JSONObject callGraphQLAPI(String graphQLCommand) {
+    public JSONObject callGraphQLAPI(String graphQLCommand) {
         String method = "callGraphQLAPI";
         WebhookReceiverLogger.entering("GraphQLAPIUtil", method);
+
+        String csServerUsername =  csServerConfig.username(); //CSServerInfo.CS_SERVER_USERNAME;
+        String csServerPassword = csServerConfig.password(); //CSServerInfo.CS_SERVER_PASSWORD;
+        String csServerURL = csServerConfig.graphqlUrl(); //CSServerInfo.CS_SERVER_GRAPHQL_URL;
 
         JSONObject jsonGraphQLResponse = null;
         org.apache.http.HttpResponse response = null;
@@ -66,24 +77,9 @@ public class GraphQLAPIUtil {
         BufferedReader breader = null;
 
         try {
-            String csServerUsername = CSServerInfo.CS_SERVER_USERNAME;
-            String csServerPassword = CSServerInfo.CS_SERVER_PASSWORD;
-            String csServerURL = CSServerInfo.CS_SERVER_GRAPHQL_URL;
-            
             /*
-             * Create HTTPClient and have it use TLSv1.2. If you do not wish to
-             * force TLSv1.2 to be used, you can change the protocol or
-             * completely remove the setSSLSocketFactory() call from the
-             * HttpClientBuilder call.
+             * Create HTTPClient
              */
-            /* legacy code
-            SSLConnectionSocketFactory sslConnectionSocketFactory =
-                    new SSLConnectionSocketFactory(
-                    SSLContexts.createDefault(), new String[] { "TLSv1.2" },
-                    null,
-                    SSLConnectionSocketFactory.getDefaultHostnameVerifier());
-            httpClient = HttpClientBuilder.create().setSSLSocketFactory(sslConnectionSocketFactory).build();
-            */
             httpClient = HttpClients
                     .custom()
                     .setSSLContext(new SSLContextBuilder().loadTrustMaterial(null, TrustAllStrategy.INSTANCE).build())
