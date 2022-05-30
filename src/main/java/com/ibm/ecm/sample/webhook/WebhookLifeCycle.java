@@ -77,9 +77,12 @@ public class WebhookLifeCycle {
         // Create the event action and subscription
         String eventActionName = Constants.EVENTACTION_NAME;
         String eventActionDesc = Constants.EVENTACTION_DESCRIPTION;
-        String webhookSecret = Constants.HMAC_CREDENTIAL_SECRET;
-        String webhookReceiverURL = csServerConfig.webhookReceiverUrl(); //CSServerInfo.WEBHOOK_RECEIVER_URL;
-        String webhookReceiverId = Constants.WEBHOOK_RECEIVER_REGISTRATION_ID;
+        String webhookSecret = csServerConfig.webhookReceiver().hmac();
+        //.Constants.HMAC_CREDENTIAL_SECRET;
+        String webhookReceiverURL = csServerConfig.webhookReceiver().url();
+        //.webhookReceiverUrl(); //CSServerInfo.WEBHOOK_RECEIVER_URL;
+        String webhookReceiverId = csServerConfig.webhookReceiver().registrationId();
+        //Constants.WEBHOOK_RECEIVER_REGISTRATION_ID;
         String subscriptionName = Constants.CREATE_EVENTSUBSCRIPTION_NAME;
         String subscriptionDesc = Constants.CREATE_EVENTSUBSCRIPTION_DESCRIPTION;
         WebhookReceiverLogger.debug("  =====+++++=====!!!!! "

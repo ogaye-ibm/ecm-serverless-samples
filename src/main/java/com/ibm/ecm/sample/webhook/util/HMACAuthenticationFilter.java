@@ -32,11 +32,14 @@ import java.util.Base64;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.ws.rs.ext.Provider;
 import javax.ws.rs.ext.ReaderInterceptor;
 import javax.ws.rs.ext.ReaderInterceptorContext;
 //import javax.xml.bind.DatatypeConverter;
 
+import com.ibm.ecm.sample.webhook.config.CSServerConfig;
 import com.ibm.ecm.sample.webhook.exception.HMACSecurityException;
 
 /**
@@ -67,8 +70,12 @@ import com.ibm.ecm.sample.webhook.exception.HMACSecurityException;
  * </ol>
  * <p>
  */
-@Provider
+@ApplicationScoped
 public class HMACAuthenticationFilter implements ReaderInterceptor {
+
+    @Inject
+    CSServerConfig csServerConfig;
+
     private static final String HMAC_CREDENTIALS_HEADER = "hmac";
     private static final String HMAC_SHA1_ALGORITHM = "HmacSHA1";
 
@@ -152,8 +159,7 @@ public class HMACAuthenticationFilter implements ReaderInterceptor {
 
         try {
             if (requestPayload != null) {
-                hmacComputed = calculateHMAC(requestPayload,
-                        Constants.HMAC_CREDENTIAL_SECRET);
+                hmacComputed = calculateHMAC(requestPayload, csServerConfig.webhookReceiver().hmac());
             }
             // Verify HMAC header value and computed HMAC are equal and not null
             validated = ((hmacComputed != null) && (hmacHeaderValue != null)

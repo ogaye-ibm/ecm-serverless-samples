@@ -15,10 +15,6 @@ public class Constants {
             "WebhookReceiverDocumentEventAction";
     public static final String EVENTACTION_DESCRIPTION =
             "Content Event Sample Webhook Receiver Document Event Action";
-
-    // Webhook Event Action properties
-    public static final String WEBHOOK_RECEIVER_REGISTRATION_ID = "webhook";
-    public static final String HMAC_CREDENTIAL_SECRET = "0e58ac81-2851-423c-9ee5-91d6461a7ff2";
     
     /*
      * ServletContext attribute key constants, which are used to share data

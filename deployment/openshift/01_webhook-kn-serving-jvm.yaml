@@ -23,6 +23,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: cs-server-config
+            - secretRef:
+                name: webhook-event-secret
   traffic:
     - tag: jvm
       revisionName: webhook-jvm
