@@ -38,8 +38,6 @@ public class WebhookEventReceiver {
     @Path("/live")
     @Produces(MediaType.TEXT_PLAIN)
     public String live() {
-
-        System.out.println("Config: " + " " + csServerConfig.webhookReceiverUrl());
         return "live";
     }
 
