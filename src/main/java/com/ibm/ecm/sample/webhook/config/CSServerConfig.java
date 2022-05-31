@@ -22,6 +22,5 @@ public interface CSServerConfig {
         String registrationId();
         @WithName("hmac")
         String hmac();
-
     }
 }

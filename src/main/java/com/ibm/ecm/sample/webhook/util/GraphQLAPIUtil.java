@@ -67,9 +67,9 @@ public class GraphQLAPIUtil {
         String method = "callGraphQLAPI";
         WebhookReceiverLogger.entering("GraphQLAPIUtil", method);
 
-        String csServerUsername =  csServerConfig.username(); //CSServerInfo.CS_SERVER_USERNAME;
-        String csServerPassword = csServerConfig.password(); //CSServerInfo.CS_SERVER_PASSWORD;
-        String csServerURL = csServerConfig.graphqlUrl(); //CSServerInfo.CS_SERVER_GRAPHQL_URL;
+        String csServerUsername =  csServerConfig.username();
+        String csServerPassword = csServerConfig.password();
+        String csServerURL = csServerConfig.graphqlUrl();
 
         JSONObject jsonGraphQLResponse = null;
         org.apache.http.HttpResponse response = null;

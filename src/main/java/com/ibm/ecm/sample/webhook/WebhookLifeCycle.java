@@ -29,8 +29,6 @@ public class WebhookLifeCycle {
 
     private static final Logger LOGGER = Logger.getLogger(WebhookLifeCycle.class);
 
-    //@Context ServletContext context;
-
     void onStart(@Observes StartupEvent ev) {
 
         LOGGER.info("The application Webhook Receiver is starting..." + ProfileManager.getActiveProfile());
@@ -38,7 +36,6 @@ public class WebhookLifeCycle {
         String methodName = "contextInitialized";
         WebhookReceiverLogger.entering(this.getClass().getName(),
                 methodName);
-        //ServletContext context = ev.getServletContext();
 
         // Ping the GraphQL server
         String objectStoreId = csServerConfig.objectStore();
@@ -78,11 +75,8 @@ public class WebhookLifeCycle {
         String eventActionName = Constants.EVENTACTION_NAME;
         String eventActionDesc = Constants.EVENTACTION_DESCRIPTION;
         String webhookSecret = csServerConfig.webhookReceiver().hmac();
-        //.Constants.HMAC_CREDENTIAL_SECRET;
         String webhookReceiverURL = csServerConfig.webhookReceiver().url();
-        //.webhookReceiverUrl(); //CSServerInfo.WEBHOOK_RECEIVER_URL;
         String webhookReceiverId = csServerConfig.webhookReceiver().registrationId();
-        //Constants.WEBHOOK_RECEIVER_REGISTRATION_ID;
         String subscriptionName = Constants.CREATE_EVENTSUBSCRIPTION_NAME;
         String subscriptionDesc = Constants.CREATE_EVENTSUBSCRIPTION_DESCRIPTION;
         WebhookReceiverLogger.debug("  =====+++++=====!!!!! "
