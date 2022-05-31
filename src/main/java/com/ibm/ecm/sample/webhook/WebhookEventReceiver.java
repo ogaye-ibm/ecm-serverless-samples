@@ -34,6 +34,16 @@ public class WebhookEventReceiver {
     @Inject
     GraphQLAPIUtil graphQLAPIUtil;
 
+    @PostConstruct
+    public void init() {
+        LOGGER.info("... init");
+    }
+
+    @PreDestroy
+    public void cleanup() {
+        LOGGER.info("... cleaned up");
+    }
+
     @GET
     @Path("/live")
     @Produces(MediaType.TEXT_PLAIN)
@@ -46,16 +56,6 @@ public class WebhookEventReceiver {
     @Produces(MediaType.TEXT_PLAIN)
     public String ready() {
         return "ready";
-    }
-
-    @PostConstruct
-    public void init() {
-        LOGGER.info("... init");
-    }
-
-    @PreDestroy
-    public void cleanup() {
-        LOGGER.info("... cleaned up");
     }
 
     @POST

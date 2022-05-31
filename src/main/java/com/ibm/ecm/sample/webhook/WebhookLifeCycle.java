@@ -1,7 +1,10 @@
 package com.ibm.ecm.sample.webhook;
 
 import com.ibm.ecm.sample.webhook.config.CSServerConfig;
-import com.ibm.ecm.sample.webhook.util.*;
+import com.ibm.ecm.sample.webhook.util.Constants;
+import com.ibm.ecm.sample.webhook.util.GraphQLAPIUtil;
+import com.ibm.ecm.sample.webhook.util.GraphQLCallTemplate;
+import com.ibm.ecm.sample.webhook.util.WebhookReceiverLogger;
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
 import io.quarkus.runtime.configuration.ProfileManager;
@@ -39,7 +42,6 @@ public class WebhookLifeCycle {
 
         // Ping the GraphQL server
         String objectStoreId = csServerConfig.objectStore();
-        //CSServerInfo.CS_SERVER_OBJECTSTORE;
 
         WebhookReceiverLogger.debug(
                 "WebhookReceiverServletContextListener starting up-");
@@ -128,7 +130,7 @@ public class WebhookLifeCycle {
             WebhookReceiverLogger.info(
                     "Successfully created the Webhook External Event Action "
                             + "with ID=" + eevExternalEventActionId);
-           // context.setAttribute(Constants.EEV_EVENT_ACTION_ID_ATTR_KEY, eevExternalEventActionId);
+            // context.setAttribute(Constants.EEV_EVENT_ACTION_ID_ATTR_KEY, eevExternalEventActionId);
 
         } catch (JSONException je) {
             String errorMessage = "Unable to parse response JSON to get Webhook"
@@ -208,10 +210,10 @@ public class WebhookLifeCycle {
 
         WebhookReceiverLogger.exiting(this.getClass().getName(),
                 methodName);
-
     }
 
     void onStop(@Observes ShutdownEvent ev) {
+        //TODO: implement any clean up event needed. However, keep in mind the stateless nature of serverless cloud-native
         LOGGER.info("The application Webhook Receiver is stopping...");
     }
 

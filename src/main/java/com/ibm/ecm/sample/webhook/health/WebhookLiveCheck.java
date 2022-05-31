@@ -13,11 +13,11 @@ import javax.inject.Inject;
 public class WebhookLiveCheck implements HealthCheck {
 
     @Inject
-    WebhookEventReceiver exampleResource;
+    WebhookEventReceiver webhookEventReceiver;
 
     @Override
     public HealthCheckResponse call() {
-        exampleResource.live();
-        return HealthCheckResponse.named("Webhook Event Receiver REST Endpoint").up().build();
+        webhookEventReceiver.live();
+        return HealthCheckResponse.named("Webhook Event Receiver REST Endpoint Liveness").up().build();
     }
 }

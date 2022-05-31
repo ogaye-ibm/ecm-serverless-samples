@@ -13,12 +13,12 @@ import javax.inject.Inject;
 public class WebhookHealthCheck implements HealthCheck {
 
     @Inject
-    WebhookEventReceiver exampleResource;
+    WebhookEventReceiver webhookEventReceiver;
 
     @Override
     public HealthCheckResponse call() {
-        exampleResource.ready();
-        return HealthCheckResponse.named("Webhook Event Receiver REST Endpoint").up().build();
+        webhookEventReceiver.ready();
+        return HealthCheckResponse.named("Webhook Event Receiver REST Endpoint Readiness").up().build();
     }
 
 }
