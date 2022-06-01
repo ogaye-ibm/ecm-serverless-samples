@@ -12,9 +12,9 @@ spec:
         autoscaling.knative.dev/maxScale: "5"
     spec:
       containers:
-        - image: image-registry.openshift-image-registry.svc:5000/default/webhook-jvm:latest
+        #- image: image-registry.openshift-image-registry.svc:5000/default/webhook-jvm:latest
         #- image: image-registry.openshift-image-registry.svc:5000/$NAMESPACE/webhook-jvm:latest
-        #- image: quay.io/omar.gaye-ibm/webhook-native:latest
+        - image: quay.io/omar.gaye-ibm/webhook-native:latest
           name: webhook-native-container
           ports:
             - containerPort: 8080
