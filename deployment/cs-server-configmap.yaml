@@ -3,9 +3,8 @@ kind: ConfigMap
 metadata:
   name: cs-server-config
 data:
-  CS_SERVER_GRAPHQL_URL: https://cpd-cp4ba.itzroks-550004cpmg-luxrub-4b4a324f027aea19c5cbc0c3275c4656-0000.us-east.containers.appdomain.cloud/content-services-graphql/graphql
+  CS_SERVER_GRAPHQL_URL: https://console-openshift-console.itzroks-550004cpmg-mnnlr7-4b4a324f027aea19c5cbc0c3275c4656-0000.us-east.containers.appdomain.cloud/content-services-graphql/graphql
   CS_SERVER_OBJECTSTORE: DEVOS1
   CS_SERVER_USERNAME: cp4admin
-  CS_SERVER_PASSWORD: WN5dIsiCO7GnLbhzc2Ee
-  WEBHOOK_RECEIVER_URL: https://native-webhook-default.itzroks-550004cpmg-luxrub-4b4a324f027aea19c5cbc0c3275c4656-0000.us-east.containers.appdomain.cloud/receiver
-
+  CS_SERVER_PASSWORD: tvaLqKd4gCTU8tK4UhXS
+  WEBHOOK_RECEIVER_URL: https://console-openshift-console.itzroks-550004cpmg-mnnlr7-4b4a324f027aea19c5cbc0c3275c4656-0000.us-east.containers.appdomain.cloud/receiver
